@@ -17,6 +17,10 @@ last_draw_result = "12, 34, 56, 23, 45; 9"
 ticket_price_usd = 2
 
 user_data = {}
+current_froll_price = froll_price  # Khởi tạo với giá từ file froll_price.py
+
+# ID của bạn để xác nhận quyền chủ sở hữu
+OWNER_ID = 901534751  # Thay số này bằng User ID của bạn
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -85,7 +89,7 @@ def quick_select_ticket(call):
         return
 
     # Tạo vé ngẫu nhiên duy nhất
-    main_numbers = sorted(random.sample(range(1, 70), 5))
+    main_numbers = sorted(random.sample(range(1, 69), 5))  # Chỉnh lại phạm vi 1-69
     mega_ball = random.randint(1, 26)
     formatted_ticket = f"{','.join(map(str, main_numbers))};{mega_ball}"
 
@@ -143,11 +147,5 @@ def handle_payment(call):
     if ticket_count == 0:
         bot.send_message(call.message.chat.id, "You haven't selected any tickets yet. Please choose your tickets first.")
     else:
-        total_froll = (ticket_price_usd * ticket_count) / froll_price
-        memo = f"Tickets: {', '.join(user_data[user_id]['tickets'])}, Time: {datetime.now().strftime('%H:%M:%S')}, Draw: {next_draw_time.strftime('%Y-%m-%d')}"
-        
-        payment_message = (
-            "💰 *Mega Millions Payment Request*\n\n"
-            f"🎫 *Tickets Selected:* {ticket_count}\n"
-            f"💵 *Total Amount:* {total_froll:.4f} FROLL\n\n"
-            f"📅
+        total_froll = (ticket_price_usd * ticket_count) / current_froll_price
+        memo = f"Tickets: {', '.join(user_data[user_id]['tickets'])}, Time:
