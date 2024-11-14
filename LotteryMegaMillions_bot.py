@@ -149,4 +149,5 @@ def handle_payment(call):
         payment_message = (
             "💰 *Mega Millions Payment Request*\n\n"
             f"🎫 *Tickets Selected:* {ticket_count}\n"
-            f"💵 *Total Amount:* {total_f
+            f"💵 *Total Amount:* {total_froll:.4f} FROLL\n\n"
+            f"📅
